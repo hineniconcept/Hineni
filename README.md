@@ -1,1 +1,817 @@
-# Hineni
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hineni. — eis-me aqui</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Barlow:wght@300;400;600;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–orange: #E85D24;
+–orange-dim: #C43811;
+–black: #080806;
+–warm-black: #0f0e0a;
+–off-white: #F0EAE0;
+–gray: #6b6660;
+–gray-light: #9e9890;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–black);
+color: var(–off-white);
+font-family: ‘Barlow’, sans-serif;
+font-weight: 300;
+overflow-x: hidden;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 999;
+opacity: 0.35;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+opacity: 0;
+transform: translateY(32px);
+transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* ============================================================
+HERO
+============================================================ */
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+padding: 60px;
+position: relative;
+overflow: hidden;
+}
+
+/* Fire glow background */
+.hero::after {
+content: ‘’;
+position: absolute;
+bottom: -100px;
+left: -100px;
+width: 600px;
+height: 600px;
+background: radial-gradient(ellipse, rgba(232,93,36,0.12) 0%, transparent 65%);
+pointer-events: none;
+animation: breathe 6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+0%, 100% { opacity: 0.6; transform: scale(1); }
+50%       { opacity: 1;   transform: scale(1.15); }
+}
+
+.hero-eyebrow {
+font-size: 10px;
+letter-spacing: 0.4em;
+color: var(–orange);
+text-transform: uppercase;
+margin-bottom: 32px;
+font-weight: 400;
+}
+
+.hero-logo {
+font-family: ‘Barlow’, sans-serif;
+font-weight: 900;
+font-size: clamp(72px, 18vw, 200px);
+color: var(–orange);
+line-height: 0.88;
+letter-spacing: -0.02em;
+position: relative;
+z-index: 1;
+}
+
+.hero-tagline {
+font-size: 11px;
+letter-spacing: 0.38em;
+color: var(–gray);
+text-transform: uppercase;
+margin-top: 24px;
+margin-bottom: 80px;
+font-weight: 400;
+}
+
+.hero-scroll {
+font-size: 10px;
+letter-spacing: 0.3em;
+color: var(–gray);
+text-transform: uppercase;
+display: flex;
+align-items: center;
+gap: 16px;
+}
+.hero-scroll::after {
+content: ‘’;
+width: 40px;
+height: 1px;
+background: var(–gray);
+display: block;
+animation: scroll-line 2s ease-in-out infinite;
+}
+@keyframes scroll-line {
+0%, 100% { width: 40px; opacity: 0.4; }
+50%       { width: 80px; opacity: 1; }
+}
+
+/* ============================================================
+SEÇÕES
+============================================================ */
+section {
+padding: 100px 60px;
+max-width: 900px;
+margin: 0 auto;
+position: relative;
+}
+
+.section-label {
+font-size: 10px;
+letter-spacing: 0.38em;
+color: var(–orange);
+text-transform: uppercase;
+font-weight: 400;
+margin-bottom: 40px;
+display: flex;
+align-items: center;
+gap: 14px;
+}
+.section-label::after {
+content: ‘’;
+width: 32px;
+height: 1px;
+background: var(–orange);
+opacity: 0.5;
+}
+
+/* PALAVRA */
+.section-word {
+padding: 120px 60px;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.word-display {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(52px, 10vw, 108px);
+font-weight: 300;
+line-height: 1.05;
+color: var(–off-white);
+}
+
+.word-display em {
+color: var(–orange);
+font-style: italic;
+}
+
+.word-body {
+margin-top: 40px;
+font-size: 16px;
+line-height: 1.9;
+color: var(–gray-light);
+max-width: 560px;
+font-weight: 300;
+}
+
+.word-body strong {
+color: var(–off-white);
+font-weight: 400;
+}
+
+/* DIVISOR */
+.divider {
+width: 100%;
+max-width: 900px;
+margin: 0 auto;
+padding: 0 60px;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.2), transparent);
+}
+
+/* MANIFESTO */
+.manifesto {
+padding: 120px 60px;
+background: var(–warm-black);
+position: relative;
+overflow: hidden;
+}
+
+.manifesto::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.3), transparent);
+}
+
+.manifesto::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.3), transparent);
+}
+
+.manifesto-inner {
+max-width: 900px;
+margin: 0 auto;
+position: relative;
+}
+
+.manifesto-bar {
+position: absolute;
+left: 0;
+top: 0;
+width: 2px;
+height: 100%;
+background: var(–orange);
+opacity: 0.6;
+}
+
+.manifesto-text {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(28px, 5vw, 52px);
+font-weight: 300;
+line-height: 1.3;
+color: var(–off-white);
+padding-left: 32px;
+}
+
+.manifesto-text em {
+color: var(–orange);
+font-style: italic;
+}
+
+/* ELEMENTOS PROFÉTICOS */
+.elementos {
+padding: 100px 60px;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.elementos-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 2px;
+margin-top: 48px;
+}
+
+/* MOMENTO — seção narrativa da fogueira */
+.momento {
+padding: 100px 60px;
+background: var(–warm-black);
+position: relative;
+overflow: hidden;
+}
+.momento::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.3), transparent);
+}
+.momento::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.3), transparent);
+}
+.momento-inner {
+max-width: 900px;
+margin: 0 auto;
+}
+.momento-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(32px, 5vw, 54px);
+font-weight: 300;
+color: var(–off-white);
+line-height: 1.15;
+margin-bottom: 36px;
+}
+.momento-title em { color: var(–orange); font-style: italic; }
+.momento-body {
+font-size: 15px;
+line-height: 1.9;
+color: var(–gray-light);
+max-width: 600px;
+font-weight: 300;
+}
+.momento-body strong { color: var(–off-white); font-weight: 400; }
+
+.elemento {
+padding: 40px 28px;
+border: 1px solid rgba(232,93,36,0.12);
+background: rgba(232,93,36,0.02);
+transition: border-color 0.4s ease, background 0.4s ease;
+cursor: default;
+}
+
+.elemento:hover {
+border-color: rgba(232,93,36,0.35);
+background: rgba(232,93,36,0.05);
+}
+
+.elemento-symbol {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 40px;
+color: var(–orange);
+opacity: 0.7;
+line-height: 1;
+margin-bottom: 20px;
+}
+
+.elemento-title {
+font-size: 9px;
+letter-spacing: 0.32em;
+text-transform: uppercase;
+color: var(–off-white);
+font-weight: 400;
+margin-bottom: 12px;
+}
+
+.elemento-text {
+font-size: 13px;
+line-height: 1.7;
+color: var(–gray);
+font-weight: 300;
+}
+
+/* CHAMADO */
+.chamado {
+padding: 140px 60px;
+text-align: center;
+position: relative;
+}
+
+.chamado-glow {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 500px;
+height: 500px;
+background: radial-gradient(ellipse, rgba(232,93,36,0.08) 0%, transparent 65%);
+pointer-events: none;
+animation: breathe 5s ease-in-out infinite;
+}
+
+.chamado-question {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(24px, 4vw, 42px);
+font-weight: 300;
+font-style: italic;
+color: var(–gray-light);
+line-height: 1.4;
+margin-bottom: 48px;
+position: relative;
+z-index: 1;
+}
+
+.chamado-answer {
+font-family: ‘Barlow’, sans-serif;
+font-weight: 900;
+font-size: clamp(52px, 12vw, 130px);
+color: var(–orange);
+line-height: 0.9;
+letter-spacing: -0.02em;
+position: relative;
+z-index: 1;
+}
+
+.chamado-sub {
+font-size: 11px;
+letter-spacing: 0.38em;
+color: var(–gray);
+text-transform: uppercase;
+margin-top: 24px;
+font-weight: 400;
+position: relative;
+z-index: 1;
+}
+
+/* DROPS */
+.drops {
+padding: 100px 60px;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.drops-intro {
+font-size: 15px;
+line-height: 1.9;
+color: var(–gray-light);
+max-width: 580px;
+margin-top: 32px;
+font-weight: 300;
+}
+
+.drops-intro strong { color: var(–off-white); font-weight: 400; }
+
+.drops-list {
+margin-top: 56px;
+display: flex;
+flex-direction: column;
+gap: 0;
+}
+
+.drop-item {
+display: flex;
+gap: 32px;
+padding: 32px 0;
+border-bottom: 1px solid rgba(232,93,36,0.1);
+align-items: flex-start;
+}
+
+.drop-item:first-child { border-top: 1px solid rgba(232,93,36,0.1); }
+
+.drop-num {
+font-family: ‘Barlow’, sans-serif;
+font-weight: 900;
+font-size: 11px;
+letter-spacing: 0.2em;
+color: var(–orange);
+opacity: 0.5;
+min-width: 32px;
+padding-top: 4px;
+}
+
+.drop-content-title {
+font-size: 13px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–off-white);
+font-weight: 400;
+margin-bottom: 8px;
+}
+
+.drop-content-text {
+font-size: 13px;
+line-height: 1.7;
+color: var(–gray);
+font-weight: 300;
+}
+
+/* PRÓXIMO */
+.proximo {
+padding: 100px 60px;
+background: var(–warm-black);
+position: relative;
+}
+
+.proximo::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 1px;
+background: linear-gradient(to right, transparent, rgba(232,93,36,0.3), transparent);
+}
+
+.proximo-inner {
+max-width: 900px;
+margin: 0 auto;
+}
+
+.proximo-badge {
+display: inline-block;
+font-size: 9px;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–orange);
+border: 1px solid rgba(232,93,36,0.3);
+padding: 6px 14px;
+margin-bottom: 40px;
+font-weight: 400;
+}
+
+.proximo-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(36px, 6vw, 64px);
+font-weight: 300;
+color: var(–off-white);
+line-height: 1.1;
+margin-bottom: 32px;
+}
+
+.proximo-title em { color: var(–orange); font-style: italic; }
+
+.proximo-text {
+font-size: 15px;
+line-height: 1.9;
+color: var(–gray-light);
+max-width: 560px;
+font-weight: 300;
+}
+
+@media (max-width: 640px) {
+.drops, .proximo { padding-left: 28px; padding-right: 28px; }
+}
+footer {
+padding: 40px 60px;
+border-top: 1px solid rgba(255,255,255,0.05);
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 10px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–gray);
+}
+
+.footer-logo {
+font-family: ‘Barlow’, sans-serif;
+font-weight: 900;
+font-size: 20px;
+color: var(–orange);
+letter-spacing: -0.01em;
+opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+.hero, section, .manifesto, .elementos, .chamado, .momento { padding-left: 28px; padding-right: 28px; }
+.elementos-grid { grid-template-columns: 1fr; }
+footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 28px; }
+.section-word { padding: 80px 28px; }
+.divider { padding: 0 28px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+  <p class="hero-eyebrow reveal">Uma palavra. Uma resposta. Um chamado.</p>
+  <div class="hero-logo reveal reveal-delay-1">hineni.</div>
+  <p class="hero-tagline reveal reveal-delay-2">eis-me aqui</p>
+  <div class="hero-scroll reveal reveal-delay-3">continuar</div>
+</div>
+
+<!-- PALAVRA -->
+
+<div class="section-word">
+  <div class="section-label reveal">A origem · Hebraico</div>
+  <div class="word-display reveal reveal-delay-1">
+    Quando Deus chama,<br>
+    alguém precisa<br>
+    <em>responder.</em>
+  </div>
+  <p class="word-body reveal reveal-delay-2">
+    Não com hesitação. Com o corpo inteiro.<br><br>
+    <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--off-white);">הִנֵּנִי</span> — <em style="font-family: 'Cormorant Garamond', serif; font-style: italic;">hineni.</em> Em hebraico, significa simplesmente: <em style="font-family: 'Cormorant Garamond', serif; font-style: italic;">"eis-me aqui"</em>. Mas quando pronunciada nas páginas sagradas, carrega o peso de uma entrega completa. Não é apenas localização. É disposição.<br><br>
+    Como <strong>Abraão</strong> diante do altar.<br>
+    Como <strong>Moisés</strong> diante da sarça em chamas.<br>
+    Como <strong>Isaías</strong> na visão do trono,<br>
+    quando a pergunta ecoou:<br><br>
+    <em style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--off-white); font-style: italic;">"A quem enviarei?"</em><br><br>
+    E a resposta que mudou tudo:<br>
+    <strong>eis-me aqui. Envia-me a mim.</strong>
+  </p>
+</div>
+
+<div class="divider reveal"></div>
+
+<!-- CARDS BÍBLICOS -->
+
+<div class="section-word" style="padding-top: 0;">
+  <div style="display:flex; flex-direction:column; gap: 16px; margin-top: 0;">
+    <div style="border: 1px solid rgba(232,93,36,0.15); padding: 28px; background: rgba(232,93,36,0.02);" class="reveal">
+      <div style="font-size:9px; letter-spacing:0.3em; color:var(--orange); text-transform:uppercase; margin-bottom:12px; font-weight:400;">Gênesis 22</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--off-white); margin-bottom:10px;">Abraão</div>
+      <p style="font-size:13px; color:var(--gray); line-height:1.7;">"Hineni." Ao ouvir o chamado do Pai, Abraão respondeu antes de saber o que seria pedido.</p>
+    </div>
+    <div style="border: 1px solid rgba(232,93,36,0.15); padding: 28px; background: rgba(232,93,36,0.02);" class="reveal reveal-delay-1">
+      <div style="font-size:9px; letter-spacing:0.3em; color:var(--orange); text-transform:uppercase; margin-bottom:12px; font-weight:400;">Êxodo 3</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--off-white); margin-bottom:10px;">Moisés</div>
+      <p style="font-size:13px; color:var(--gray); line-height:1.7;">"Hineni." Diante da sarça ardente, um pastor fugido se tornou libertador de um povo.</p>
+    </div>
+    <div style="border: 1px solid rgba(232,93,36,0.15); padding: 28px; background: rgba(232,93,36,0.02);" class="reveal reveal-delay-2">
+      <div style="font-size:9px; letter-spacing:0.3em; color:var(--orange); text-transform:uppercase; margin-bottom:12px; font-weight:400;">Isaías 6</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--off-white); margin-bottom:10px;">Isaías</div>
+      <p style="font-size:13px; color:var(--gray); line-height:1.7;">"Hineni." Depois da visão do trono, o profeta se oferece: "Envia-me a mim."</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"></div>
+
+<!-- MANIFESTO -->
+
+<div class="manifesto">
+  <div class="manifesto-inner">
+    <div class="manifesto-bar"></div>
+    <div class="manifesto-text reveal">
+      Cultura une um povo.<br>
+      <em>Cultura transforma um povo.</em><br>
+      Um povo unido pela mesma resposta<br>
+      se torna <em>impenetrável.</em><br><br>
+      Hineni existe para fortalecer esse povo —<br>
+      o povo que vive o extraordinário,<br>
+      que não apenas ocupa espaço,<br>
+      mas <em>transforma o mundo ao redor.</em>
+    </div>
+    <div class="manifesto-text reveal reveal-delay-1" style="font-family:'Barlow',sans-serif; font-size:15px; font-weight:300; line-height:1.9; color:var(--gray-light); margin-top:48px; padding-left:32px;">
+      Acreditamos que a Igreja não é apenas um evento semanal — é um ecossistema cultural. Cada canção, cada palavra, cada gesto compartilhado molda a identidade de quem habita esse espaço. <em style="font-family:'Cormorant Garamond',serif; color:var(--off-white);">hineni.</em> nasce dessa convicção.<br><br>
+      Não é um projeto artístico. É uma resposta. Uma disponibilidade coletiva para ser transformado e, transformado, transformar. É a Igreja Vida Nova dizendo, com a vida e com a arte: <em style="font-family:'Cormorant Garamond',serif; color:var(--off-white);">eis-me aqui.</em><br><br>
+      Cultura que nasce de dentro transforma por fora. Quando um povo aprende a dizer <em style="font-family:'Cormorant Garamond',serif; color:var(--off-white);">hineni</em> — com o corpo, com o tempo, com o talento — a cidade ao redor começa a perceber que algo diferente habita aquele lugar.
+    </div>
+  </div>
+</div>
+
+<!-- ELEMENTOS PROFÉTICOS -->
+
+<div class="elementos">
+  <div class="section-label reveal">Elementos proféticos</div>
+
+  <div class="elementos-grid">
+    <div class="elemento reveal">
+      <div class="elemento-symbol">🔥</div>
+      <div class="elemento-title">A fogueira</div>
+      <p class="elemento-text">O fogo purifica, aquece e convoca. Ao redor da fogueira, um povo se forma — não por obrigação, mas por chamado.</p>
+    </div>
+    <div class="elemento reveal reveal-delay-1">
+      <div class="elemento-symbol">🏳</div>
+      <div class="elemento-title">A toalha</div>
+      <p class="elemento-text">O maior entre nós serve. A toalha não é símbolo de fraqueza — é símbolo de quem entendeu o chamado de verdade.</p>
+    </div>
+    <div class="elemento reveal reveal-delay-2">
+      <div class="elemento-symbol">◡</div>
+      <div class="elemento-title">O lava-pés</div>
+      <p class="elemento-text">O chamado não é para o palco. É para o chão. Para o ajoelhar. Para o servir sem esperar ser visto.</p>
+    </div>
+    <div class="elemento reveal reveal-delay-1">
+      <div class="elemento-symbol">✦</div>
+      <div class="elemento-title">A folha</div>
+      <p class="elemento-text">Uma folha em branco. Um convite para escrever tudo aquilo que você sempre quis dizer para Deus — sem filtro, sem ensaio. Palavras que precisavam sair.</p>
+    </div>
+    <div class="elemento reveal reveal-delay-2">
+      <div class="elemento-symbol">∕</div>
+      <div class="elemento-title">A caneta</div>
+      <p class="elemento-text">Escrever é um ato de coragem. A caneta na mão é o gesto de quem decide não guardar mais — de quem entrega, de verdade.</p>
+    </div>
+    <div class="elemento reveal reveal-delay-3">
+      <div class="elemento-symbol">◯</div>
+      <div class="elemento-title">A ceia</div>
+      <p class="elemento-text">No culto, partimos o pão e bebemos do cálice. A ceia não é ritual — é memória viva. Lembrança de que o chamado foi pago com sangue, e que vale tudo responder.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MOMENTO DA FOGUEIRA -->
+
+<div class="momento">
+  <div class="momento-inner">
+    <div class="section-label reveal">O momento</div>
+    <div class="momento-title reveal reveal-delay-1">
+      Escrevemos.<br>
+      Entregamos.<br>
+      <em>Queimamos.</em>
+    </div>
+    <p class="momento-body reveal reveal-delay-2">
+      Cada um pegou uma folha e uma caneta.<br>
+      Escreveu tudo aquilo que carregava — as dúvidas, os medos, as palavras que nunca disseram para Deus.<br><br>
+      Depois fomos até a fogueira.<br><br>
+      <strong>E entregamos.</strong><br><br>
+      O fogo não apagou nada — purificou. O que era peso virou oferta. O que era silêncio virou resposta.<br><br>
+      No culto, tomamos a ceia. Partimos o pão. Bebemos do cálice.<br>
+      A memória do que Cristo fez — e a confirmação de que vale tudo responder.<br><br>
+      <strong>Hineni.</strong>
+    </p>
+  </div>
+</div>
+
+<div class="divider reveal"></div>
+
+<!-- O QUE FAZEMOS -->
+
+<div class="drops">
+  <div class="section-label reveal">O que fazemos</div>
+  <div class="word-display reveal reveal-delay-1">
+    Três frentes.<br>
+    <em>Um chamado.</em>
+  </div>
+  <p class="drops-intro reveal reveal-delay-2">
+    A hineni não é só um evento. É um ecossistema —
+    construído para que o jovem que responde ao chamado
+    tenha <strong>espaço, conteúdo e identidade</strong> para viver isso na prática.
+  </p>
+
+  <div class="drops-list">
+    <div class="drop-item reveal">
+      <div class="drop-num">01</div>
+      <div>
+        <div class="drop-content-title">Eventos</div>
+        <p class="drop-content-text">Experiências presenciais que criam comunidade real. O hineni acamp foi o primeiro — um encontro de jovens que responderam juntos ao chamado. Mais vem por aí.</p>
+      </div>
+    </div>
+    <div class="drop-item reveal reveal-delay-1">
+      <div class="drop-num">02</div>
+      <div>
+        <div class="drop-content-title">Conteúdo digital</div>
+        <p class="drop-content-text">Nas redes, a hineni fala para quem está buscando. Conteúdo que não é entretenimento — é formação. Cada post carrega a mesma pergunta: e você, o que vai responder?</p>
+      </div>
+    </div>
+    <div class="drop-item reveal reveal-delay-2">
+      <div class="drop-num">03</div>
+      <div>
+        <div class="drop-content-title">Vestuário</div>
+        <p class="drop-content-text">Cada peça é uma declaração. A hineni lança drops — coleções em quantidade limitada, cada uma com um conceito por trás. Não é moda. É pertencimento.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider reveal"></div>
+
+<!-- DROPS -->
+
+<div class="proximo">
+  <div class="proximo-inner">
+    <div class="section-label reveal">Drops</div>
+    <div class="proximo-badge reveal">Lançamento limitado</div>
+    <div class="proximo-title reveal reveal-delay-1">
+      Cada peça carrega<br>
+      <em>uma história.</em>
+    </div>
+    <p class="proximo-text reveal reveal-delay-2">
+      Os drops da hineni não são coleções sazonais.
+      São lançamentos conceituais — cada um nasce de uma ideia,
+      um momento, uma verdade que precisa ser vestida.<br><br>
+      Quantidade limitada. Conceito por trás.
+      Quem usa, declara.<br><br>
+      <strong style="color: var(--off-white);">O primeiro drop está sendo construído.</strong><br>
+      A marca vem primeiro. O resto vem junto.
+    </p>
+  </div>
+</div>
+
+<div class="divider reveal"></div>
+
+<!-- CHAMADO FINAL -->
+
+<div class="chamado">
+  <div class="chamado-glow"></div>
+  <p class="chamado-question reveal">
+    "Deus está chamando.<br>
+    A pergunta ainda ecoa.<br>
+    E você — o que vai responder?"
+  </p>
+  <div class="chamado-answer reveal reveal-delay-1">hineni.</div>
+  <p class="chamado-sub reveal reveal-delay-2">eis-me aqui · Igreja Vida Nova</p>
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  <span class="footer-logo">hineni.</span>
+  <span>marca cristã · cultura & identidade</span>
+  <span>Igreja Vida Nova</span>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+// Trigger hero elements on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 180);
+  });
+});
+</script>
+
+</body>
+</html>
